@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>Campus ID Card Designer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">ID</div>
+        <div>
+          <h1>Campus ID Card Designer</h1>
+          <p>Create, edit & export institutional ID cards</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle theme">☾</button>
+        <button class="secondary-btn" id="saveBtn">Save</button>
+        <button class="primary-btn" id="downloadBtn">Download PNG</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel left-panel">
+        <div class="panel-head">
+          <h2>Card Setup</h2>
+          <button class="ghost-btn" id="resetBtn">Reset</button>
+        </div>
+
+        <section class="section">
+          <label>Card orientation</label>
+          <div class="segmented">
+            <button class="seg active" data-orientation="portrait">Portrait</button>
+            <button class="seg" data-orientation="landscape">Landscape</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <label>Institution</label>
+          <input id="institution" value="BAF Shaheen College Dhaka" placeholder="School / College / University">
+          <input id="address" value="Dhaka Cantonment, Dhaka - 1206" placeholder="Address">
+          <div class="two-col">
+            <input id="website" placeholder="Website">
+            <input id="phone" placeholder="Phone">
+          </div>
+        </section>
+
+        <section class="section">
+          <label>Brand colors</label>
+          <div class="color-row">
+            <label class="color-field"><span>Primary</span><input type="color" id="primaryColor" value="#0f5fa8"></label>
+            <label class="color-field"><span>Accent</span><input type="color" id="accentColor" value="#d62828"></label>
+          </div>
+        </section>
+
+        <section class="section">
+          <label>Student data</label>
+          <input id="studentName" value="MD EMON AHMED APON" placeholder="Student name">
+          <input id="studentId" value="241151" placeholder="Student ID">
+          <div class="two-col">
+            <input id="className" value="XI - XII" placeholder="Class">
+            <input id="roll" value="241151" placeholder="Roll">
+          </div>
+          <div class="two-col">
+            <input id="group" value="Science" placeholder="Group">
+            <input id="session" value="2026" placeholder="Session">
+          </div>
+          <div class="two-col">
+            <input id="blood" value="B(+)" placeholder="Blood group">
+            <input id="guardian" value="MD ASHADUL ISLAM" placeholder="Guardian">
+          </div>
+          <input id="emergency" value="01736354709" placeholder="Emergency contact">
+        </section>
+
+        <section class="section">
+          <label>Images</label>
+          <div class="upload-grid">
+            <label class="upload-box">
+              <input type="file" id="logoInput" accept="image/*">
+              <span>＋ Logo</span>
+              <small>PNG / JPG / WebP</small>
+            </label>
+            <label class="upload-box">
+              <input type="file" id="photoInput" accept="image/*">
+              <span>＋ Student Photo</span>
+              <small>PNG / JPG / WebP</small>
+            </label>
+            <label class="upload-box full">
+              <input type="file" id="signatureInput" accept="image/*">
+              <span>＋ Signature</span>
+              <small>Optional transparent PNG recommended</small>
+            </label>
+          </div>
+        </section>
+
+        <section class="section">
+          <label>Quick templates</label>
+          <div class="template-grid">
+            <button class="template-card" data-template="classic"><span class="mini-card classic"></span>Classic</button>
+            <button class="template-card" data-template="modern"><span class="mini-card modern"></span>Modern</button>
+            <button class="template-card" data-template="minimal"><span class="mini-card minimal"></span>Minimal</button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="canvas-area">
+        <div class="canvas-toolbar">
+          <div>
+            <strong id="canvasTitle">Portrait ID Card</strong>
+            <span id="canvasSize">900 × 1200 px</span>
+          </div>
+          <div class="toolbar-actions">
+            <button class="secondary-btn" id="zoomOut">−</button>
+            <span id="zoomLabel">60%</span>
+            <button class="secondary-btn" id="zoomIn">＋</button>
+            <button class="secondary-btn" id="addTextBtn">＋ Text</button>
+          </div>
+        </div>
+
+        <div class="stage-wrap">
+          <div id="stage">
+            <canvas id="cardCanvas" width="900" height="1200"></canvas>
+            <div id="selectionBox" class="selection-box hidden"></div>
+          </div>
+        </div>
+
+        <div class="hint">
+          <span>Tip:</span> Tap an element to select it. Drag selected elements to reposition them. Use the right panel for exact values.
+        </div>
+      </section>
+
+      <aside class="panel right-panel">
+        <div class="panel-head">
+          <h2>Element Editor</h2>
+          <span id="selectedType" class="badge">None</span>
+        </div>
+
+        <section id="elementEditor" class="section muted">
+          <p>Select an element on the card to edit it.</p>
+        </section>
+
+        <section class="section">
+          <label>Add element</label>
+          <div class="add-grid">
+            <button class="add-btn" data-add="text">T <span>Text</span></button>
+            <button class="add-btn" data-add="rect">□ <span>Shape</span></button>
+            <button class="add-btn" data-add="line">╱ <span>Line</span></button>
+            <button class="add-btn" data-add="code">▦ <span>Code</span></button>
+          </div>
+        </section>
+
+        <section class="section">
+          <label>Export</label>
+          <button class="primary-btn wide" id="downloadBtn2">Download PNG</button>
+          <button class="secondary-btn wide" id="printBtn">Print card</button>
+        </section>
+
+        <section class="section">
+          <label>Bulk CSV</label>
+          <p class="small-help">Upload a CSV with columns such as Name, Student ID, Class, Roll, Section, Group, Session, Blood Group, Guardian, Emergency. Preview the first row and generate cards one by one.</p>
+          <input type="file" id="csvInput" accept=".csv,text/csv">
+          <div id="csvStatus" class="csv-status">No CSV loaded.</div>
+          <button class="secondary-btn wide" id="useCsvBtn" disabled>Use first CSV row</button>
+        </section>
+
+        <section class="section">
+          <label>Saved designs</label>
+          <button class="secondary-btn wide" id="loadBtn">Load saved design</button>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>Campus ID Card Designer</span>
+      <span>For authorized institutional use only</span>
+    </footer>
+  </div>
+
+  <input type="file" id="loadFile" accept=".json" hidden>
+  <script src="app.js"></script>
+</body>
+</html>
